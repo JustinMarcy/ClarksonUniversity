@@ -1,0 +1,107 @@
+Justin Marcy
+Lab 4 Procedure
+
+1)
+	a)
+	 model		: 78
+	 model name	: Intel(R) Core(TM) i7-6600U CPU @ 2.60GHz
+	 ****
+
+	b)
+	 grep -c "remote" /etc/services
+	 4
+	 There were 4 instances of the word remote
+	 
+        c)
+	 grep -c -w "remote" /etc/services
+	 3
+	 There were 3 seperate lines that contained remote
+
+	d)
+	 grep -c -v "remote" /etc/services
+	 587
+
+ 	e)
+	 grep -in "remote"/etc/services
+	 30:ssh		22/tcp				# SSH Remote Login Protocol
+	 40:re-mail-ck	50/tcp			      	# Remote Mail Checking Protocol
+	 64:rtelnet		107/tcp		  	# Remote Telnet
+	 160:asf-rmcp	623/udp				# ASF Remote Management and Control Protocol
+	 197:remotefs	556/tcp		rfs_server rfs	# Brunhoff remote filesystem
+	 271:remoteping	1959/tcp			# remstats remoteping server
+	 330:remctl		4373/tcp		# Remote Authenticated Command Service
+	 415:afs3-rmtsys	7009/tcp		# remote cache manager service
+	 514:rmtcfg		1236/tcp		# Gracilis Packeten remote config server
+	 549:nrpe		5666/tcp		# Nagios Remote Plugin Executor
+
+
+2)
+
+	a)
+
+	 grep -n "EE[0-9]" spring_ms | cut -f2,6 | uniq >> eecources
+
+3)
+        a)
+	 
+	 grep -n  '^[[:blank:]]*[^[:blank:]#;]' greptest 
+
+	b)
+
+	 grep -c  '^[[:blank:]]*[^[:blank:]#;]' greptest
+	 28
+	 
+	c)
+	 grep -cvE '[^[:space:]]' greptest
+	 5
+
+	d)
+	 grep -cE '[^[:space:]]' greptest
+	 29
+	 This is different from part A because it include the commented lines at the bottom
+	 
+	e)
+	 Not Sure
+	 
+4)
+
+	a)
+	 grep -E '\bx' /usr/share/dict/words
+
+	b)
+	 grep '\bx' words /usr/share/dict/words | grep -v "'"
+	 11
+
+	c)
+	 grep '\bq[^u]' /usr/share/dict/words
+	 0
+	 There are none
+
+	d)
+	 grep [a,e,i,o,u]' /usr/share/dict/words | grep -v '[b,c,d,f,g,h,j,k,l,m,n,p,q,r,s,t,v,w,X,y,z]'
+	 | grep -v '[B,C,D,F,G,H,J,K,L,M,N,P,Q,R,S,T,V,W,X,Y,Z]'
+	 5
+	 grep [a,e,i,o,u]' /usr/share/dict/words | grep -v '[b,c,d,f,g,h,j,k,l,m,n,p,q,r,s,t,v,w,y,z]'
+	 | grep -v '[B,C,D,F,G,H,J,K,L,M,N,P,Q,R,S,T,V,W,Y,Z]'
+	 9
+
+	e)
+	grep '[a-f][a-f][a-f][a-f][a-f][a-f]' /usr/share/dict/words | grep -v '[g-z]' | grep -v '[a-f][a-f][a-f][a-f][a-f][a-f]'
+	11
+
+5)
+
+	a)
+	 grep "RL142" spring_ms | cut -f2,11 | uniq
+	 There are 14 distint classes in RL142
+
+	b)
+	 cut -f2,8,9 spring_ms | grep "4:00" | grep -c 'F'
+	 4 on FRIDAY
+	 cut -f2,8,9 spring_ms | grep "4:00" | grep -c 'R'
+	 37 on THURSDAY
+	 cut -f2,8,9 spring_ms | grep "4:00" | grep -c 'W'
+	 25 on WEDNESDAY
+
+
+sources: www.unix.stackexchange.com 

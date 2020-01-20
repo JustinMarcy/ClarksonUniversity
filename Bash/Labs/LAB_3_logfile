@@ -1,0 +1,61 @@
+Script started on 2019-02-04 14:59:25-05:00
+]0;justin@justin-VirtualBox: ~[01;32mjustin@justin-VirtualBox[00m:[01;34m~[00m$ date
+Mon Feb  4 14:59:29 EST 2019
+]0;justin@justin-VirtualBox: ~[01;32mjustin@justin-VirtualBox[00m:[01;34m~[00m$ ls -R
+.:
+[0m[01;34mDesktop[0m    [01;34mEE462[0m             example.txt~        [01;34mMusic[0m     [01;34msnap[0m        [01;34mVideos[0m
+[01;34mDocuments[0m  examples.desktop  LAB_02_marcyjc.log  [01;34mPictures[0m  [01;34mTemplates[0m
+[01;34mDownloads[0m  example.txt       LAB_3_logfile       [01;34mPublic[0m    typescript
+
+./Desktop:
+
+./Documents:
+
+./Downloads:
+
+./EE462:
+dirlist  file1.txt  file2.txt  [01;34mLab_2[0m  [01;34mLab_3[0m  new.cpp  new.cpp~
+
+./EE462/Lab_2:
+
+./EE462/Lab_3:
+[01;34mEE462_SP19[0m  [01;34mFAQ[0m  [01;34mproj2[0m  [01;34mpublic[0m  [01;32mwelcome[0m
+
+./EE462/Lab_3/EE462_SP19:
+[01;34mLAB3[0m
+
+./EE462/Lab_3/EE462_SP19/LAB3:
+
+./EE462/Lab_3/FAQ:
+[01;34mtest[0m
+
+./EE462/Lab_3/FAQ/test:
+FAQ_Linux  FAQ_shells
+
+./EE462/Lab_3/proj2:
+
+./EE462/Lab_3/public:
+
+./Music:
+
+./Pictures:
+
+./Public:
+
+./snap:
+[01;34mgnome-system-monitor[0m
+
+./snap/gnome-system-monitor:
+[01;34m57[0m  [01;34mcommon[0m  [01;36mcurrent[0m
+
+./snap/gnome-system-monitor/57:
+
+./snap/gnome-system-monitor/common:
+
+./Templates:
+
+./Videos:
+]0;justin@justin-VirtualBox: ~[01;32mjustin@justin-VirtualBox[00m:[01;34m~[00m$ exit
+exit
+
+Script done on 2019-02-04 15:00:11-05:00

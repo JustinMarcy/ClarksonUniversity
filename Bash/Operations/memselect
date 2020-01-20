@@ -1,0 +1,49 @@
+#!/bin/bash
+cut -d "," -f 1 memparts | tr -s " " | cut -d " " -f 2 | uniq > temp
+var="$(cat temp | wc -l)"
+while(true);do
+options=()
+ptype=()
+prompt="Enter the desired memory size"
+prompt2="Enter the desired package type"
+choice=0
+for (( i=1; i <= $var; i++ ));do   #This loop populates the first array of opts
+    options[i]="$options "$(sed "${i}q;d" temp)""
+done
+
+PS3="$prompt "
+select opt in "${options[@]}"; do    
+    case "$REPLY" in
+
+	[0-9])  echo "You picked $opt which is option $REPLY"
+		 choice=$REPLY
+		 var1=$(grep "${options[$REPLY]}" memparts | tr -s " " | cut -f 3 | awk '{$1=$1};1' | sort -u | wc -l)
+		 for (( i=1; i <= $var1; i++ ));do
+		     ptype[i]="$ptype "$(grep "${options[$REPLY]}" memparts | tr -s " " | cut -f 3 | awk '{$1=$1};1' | sort -u | sed "${i}q;d")""
+		 done
+		 echo ${ptype[@]}
+		 break;;
+	*) echo "Memory size not present, please retry your input" 
+	
+    esac
+done
+
+PS3="$prompt2 "
+select opt in "${ptype[@]}"; do
+    case "$REPLY" in
+	[0-9])
+	    grep "${options[$choice]}" memparts | grep ${ptype[$REPLY]} | sed -e 's/[[:space:]][[:space:]]*/\t/g' | sort -un -k10 | head -n1 | tr '\t' ' '
+	    break;;
+	*) echo "Package type not present, please retry your inpu"
+		
+    esac
+done
+
+echo "Would you like to continue? (yes or no)"
+read choice2
+if [[ $choice2 == "no" ]];then
+    break
+fi
+    
+done
+rm temp

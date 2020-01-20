@@ -1,0 +1,52 @@
+#!/bin/bash
+section='[0-9][0-9][0-9]'
+filename=$1
+while(true); do
+    echo "Enter the course number (e.g. ES100) to search or 0 to exit"
+    read choice
+    if [[ $choice == 0 ]];then
+	break
+    else
+	grep "${choice}" $filename > log
+	cat log
+	while(true);do
+	if ! [ -s log ];then
+	    echo "No results found!"
+	    break
+	else
+	    echo "Please select LEC or LAB"
+	    read choice2
+	    if ! [[ $choice2 == "LEC" || $choice2 == "LAB" ]];then
+		echo "ERROR: Must select LEC or LAB"
+	    else
+		grep "${choice2}" log > log2
+		if ! [ -s log2 ];then
+		    echo "No ${choice2} exists"
+		    break
+		else
+		    cat log2
+		    echo "Please select a section number"
+		    read choice3
+		    if [[ $choice3 =~ $section && $choice3 > 0 ]];then #using extended
+			echo "ERROR: incorrect section format"
+			break
+		    else
+			grep "${choice3}" log2 > log3
+			if ! [ -s log3 ];then
+			    echo "No such record"
+			    break
+			else
+			    cat log3
+			    rm log     #remove temporary files
+			    rm log2
+			    rm log3
+			    break
+			fi
+		    fi 
+		fi
+	    
+	    fi
+	fi
+	done
+    fi	
+done

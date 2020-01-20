@@ -1,0 +1,55 @@
+#!/bin/bash
+cat cities | cut -f2 | sort > temp
+var="$(cat temp | wc -l)"
+choice=()
+options=()
+city=0
+prompt="Please select the departure city: "
+prompt2="Please select a destination city: "
+
+#This first loop populates the city select for the next step
+for (( i=1; i <= $var; i++ ));do   #This loop populates the first array of opts
+    options[i]="$options "$(sed "${i}q;d" temp)""
+done
+
+#This creates the city prompt and checks if the city exists
+PS3="$prompt"
+select opt in "${options[@]}"; do    
+    case "$REPLY" in
+	[0-9]*)
+	   #city=$(head -$REPLY cities | tail -1 | cut -f1 | awk '{$1=$1};1')
+	   # echo $city
+	   #option=${options[$REPLY]}
+	    #echo $option
+	   #vari="San Diego"
+	    #city=$(grep "$vari" cities | cut -f1)
+	   city=$(grep ${options[$REPLY]} cities | cut -f1)
+	   #grep "${options[$REPLY]}" cities | cut -f1
+	   echo $city
+	   choice=$(awk -v city="$city" '$4 == city { print $6 }' airlines | uniq)
+	   choice=( $choice )
+	   if  [ -z $choice ];then
+	       echo "No departures from this city"
+	       exit
+	   fi
+	   break;;
+	*)  echo "ERROR: could not understand input, please try again"
+    esac
+done
+
+#This creates the second prompt and checks if there are any flights
+PS3="$prompt2"
+select opt in "${choice[@]}"; do    
+    case "$REPLY" in
+	[0-9]*) echo $city
+		echo ${choice[$REPLY-1]}
+		awk -v depart="$city" '$4 == depart' airlines | awk -v dest="${choice[$REPLY-1]}" '$6 == dest' > temp
+		if [ -s temp ]; then #checks if there is a flight
+		    cat temp 
+		else
+		    echo "No Results Found"
+		fi
+		break;;
+	*) echo "ERROR: could not understand input, please try again"
+    esac
+done

@@ -1,0 +1,32 @@
+1)
+	a)
+	sed -n -e '/^[[:space:]]*$/p' -e '/[/][/]/p' -e '/[/][*].*[*][/]/p' c_comments
+	
+	b)
+	sed -e '/^[[:space:]]*$/d' -e '/[/][/]/d' -e '/[/][*].*[*][/]/d' c_comments
+
+	c)
+	sed -e '/^[[:space:]]*$/d' -e '/[/][/]/d' -e '/[/][*].*[*][/]/d' c_comments | sed /[/][*]/,/[*][/]/d
+	This works but it deletes all the content in betweeen the start and end adresses
+	
+	d)
+	To fix this,
+	sed -e '/^[[:space:]]*$/d' -e '/[/][/]/d' -e '/[/][*].*[*][/]/d' -e 's/[/][*]\(.*\)/\1/' -e 's/[*][/]\(.*\)//' c_comments 
+
+	Now double check with the pipe command
+	sed -e '/^[[:space:]]*$/d' -e '/[/][/]/d' -e '/[/][*].*[*][/]/d' -e 's/[/][*]\(.*\)/\1/' -e 's/[*][/]\(.*\)//' c_comments | sed '/[/][*]/,/[*][/]/d'
+
+	e)
+	| wc -l
+	There are 7 lines
+
+
+
+2)
+
+	a)
+	sed '/14-Dip/s/[0-9]*\.[0-9][0-9]$/n\/a/' parts
+
+	b)
+	cat parts | tr -s " " | sed 's/[[:space:]]/,/g'
+	

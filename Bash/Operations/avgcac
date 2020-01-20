@@ -1,0 +1,33 @@
+#!/bin/bash
+#Justin Marcy
+#0630157
+#Fully working, no arguments
+#This does NOT use floats, so answers are rounded to the nearest int
+i=1
+header=()
+prev=0
+numlines=$(cat sampledata | grep -v [a-z] | wc -l) #number of lines minus the header
+#echo $numlines
+while(true);do      #gets any number of headers and stores them into an array
+    header[i]=$(cat sampledata | head -1 | cut -f $i)
+    if  [ -s ${header[i]} ];then
+	break;
+    fi
+let "i=i+1"
+done
+let "i=i-1" #needed to decrease my incrementor
+#echo ${header[@]}
+#echo $i
+
+for (( k=1; k <= $i; k++ ));do #get each column and remove header to calculate each homework column
+    cat sampledata | cut -f$k | grep -v [a-z] > temp
+    while read line #reads through each line and adds to itself 
+    do
+	let "prev=(prev+line*100)/numlines" #adds to itself and divides by number of scroes
+	#let "prev=$prev*100"
+    done < temp
+    echo "${header[k]} average = $prev"
+    prev=0
+done
+
+

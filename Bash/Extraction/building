@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if ( $# != 2 );then
+    echo "Wrong number of arguments"
+    exit 1
+
+elif ( $2 != $1 );then
+    #do nothing
+
+else
+    grep \!$2 $1 | cut -d '!' -f1,3 | tr '!' ' '
+fi
+    

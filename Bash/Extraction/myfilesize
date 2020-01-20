@@ -1,0 +1,22 @@
+#!/bin/bash
+#Jusitn Marcy
+#Fully Working, script only takes exactly one argument
+#seraches filename (case-sensitive) using grep and checks if it exists
+#NOTE: DO NOT INCLUDE a '/' if entering a directory, just enter the name of the directory
+
+
+if [ $# == 1 ];then	#checks number of arguments, must be 1
+    filename=$1
+else
+    echo "ERROR: missing file name (number of arguments is not 1)" #missing file name
+    exit
+fi
+
+result=$(ls -l | grep "$filename\$" | tr -s ' ' | cut -d ' ' -f 5)
+#echo $result
+
+if ! [ -s $filename ];then #does file exist? checks size of file
+    echo "No item found"
+else
+    echo "The size of ${filename} is ${result}"
+fi

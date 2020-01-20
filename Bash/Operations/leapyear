@@ -1,0 +1,22 @@
+#!/bin/bash
+number='[0-9][0-9][0-9][0-9]'
+while(true);do
+echo "Please enter a year, must be positive integer"
+read choice
+if [[ $choice =~ $number && $choice > 0 ]];then #using extended regex 
+    if (( ${choice} % 4 == 0 & (${choice} % 100 != 0 || ${choice} % 400 == 0) ));then
+	echo "Yes, this is a leap year"
+    else
+	echo "No, this is not a leap year"
+    fi
+else
+echo "Please try again: must be in correct format (ex: 1994)"
+fi
+
+echo "Would you like to continue (yes or no)"
+read choice2
+if [[ "$choice2" == "no" ]];then
+    break
+fi
+
+done

@@ -1,0 +1,12 @@
+git clone https://github.com/ee462/ee462.github.io.git
+
+I then edited the document
+
+git add . 
+
+git config --global user.name "JustinMarcy"
+git config --global user.email "justinmarcy22@gmail.com"
+
+git commit
+
+git push origin master

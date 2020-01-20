@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $# == 3 ]];then
+    date -d "$1 $2 $3" +%A
+else
+    echo "Please enter month day yer (example: Mar 9 1995)"
+fi
+

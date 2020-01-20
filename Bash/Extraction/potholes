@@ -1,0 +1,27 @@
+#!/bin/bash
+options=()
+prompt="Select field to search: "
+#prompt2=""
+for (( i=1; i <= 11; i++ ));do   #This loop populates the first array of opts
+    options[i]="$options "$(head -1 potholes_filled_2018 | sed 's/#//' | awk -F, -v inc=$i '{print $inc}')""
+done
+
+PS3="$prompt"
+select opt in "${options[@]}"; do    
+    case "$REPLY" in
+	[0-9]*) #prompt2="Please enter ${options[$REPLY]} to search: "
+		field=$REPLY
+		echo $field
+      		break;;
+	    *)  echo "ERROR: Could not understand input"
+    esac
+done
+while(true);do
+echo "Please enter${options[$REPLY]} to search: "
+read choice
+case $choice in
+    '') exit;;
+
+    *) grep -i "$choice" potholes_filled_2018
+esac
+done

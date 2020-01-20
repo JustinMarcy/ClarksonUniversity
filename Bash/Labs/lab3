@@ -1,0 +1,46 @@
+1) When I entered the "man cd" command it opened up the entire manual for bash. This is because
+   cd is a bash command. Other commands such as "ls" only display information specific to "ls."
+  
+2) cp -R ~ee462/public ~marcyjc/ee462/
+   Move does not work because you do not have permission to delete or edit the contents of another
+   directory without being the administrator. In this case, move does a copy and then deletes.
+
+3) I typed "cd L" which autocompleted to "cd Lab_" and then I typed "3" bringing me to the Lab_3 
+   directory.  
+   mv FAQ_Linux FAQ/
+   mv FAQ_shells FAQ/
+   By using FAQ* this moves all files that start with FAQ in that directory. The error is that 
+   it will move undesired files. 
+
+   "cat FAQ_Linux" is difficult to read on the terminal because its a lot of content and you 
+   cannot edit it. Two alternatives is using a text editor and the file explorer.   
+
+4) cp -r ~justin/EE462/Lab_3/ ~justin/BACKUPS/
+   For me, I did not observe a difference when i used the command twice, it did not create 
+   duplicate or anything like that. The command to display the directory subtree is the 
+   "tree" command. 
+
+5) rm -r BACKUPS/
+   The ls command verifies the the directory is no longer there
+
+6) PATH=$PATH:justin/EE462/Lab_3/welcome
+   echo PATH$
+   echo welcome
+
+7) To Evaluate the current shell: echo $PATH
+   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/
+   snap/bin:justin/EE462/Lab_3/welcome
+
+   To Find the value in the subshell I used: echo $BASH_SUBSHELL
+   and the value was 0
+
+   In the new terminal its value is different: 
+   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+8) 
+
+9) The command to find how many users is: who | wc -l 
+   This was 25 people
+   
+   To find out how many times I have logged in I used: last marcyjc 
+   This was 4 times

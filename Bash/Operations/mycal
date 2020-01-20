@@ -1,0 +1,28 @@
+#!/bin/bash
+while(true);do    
+result=0
+echo "Please enter the first number"
+read num1
+echo "Please enter the second number"
+read num2
+echo "please select an option using the corresponding number"
+echo "1. Addtion"
+echo "2. Subtraction"
+echo "3. Multiplication"
+echo "4. Division"
+read choice
+case $choice in
+     1) echo "Result: " $((num1 + num2));;
+     2) echo "Result: " $((num1 - num2));;
+     3) echo "Result: " $((num1 * num2));;
+     4) echo "Quotient equals: " $((num1 / num2)); echo "Remainder equals: " $((num1 % num2));   
+	
+esac
+
+echo "Do you want to continue? (Enter Yes or No)"
+read choice2
+if [[ $choice2 == "no" ]];then
+    break
+fi
+
+done

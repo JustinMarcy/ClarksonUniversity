@@ -1,0 +1,40 @@
+#!/bin/bash
+#Justin Marcy
+#0630157
+#This script works correctly and take only 1 argument
+#Error-checking for both user inputs
+
+options=() #array for the rooms
+k=1 #incrementor
+prompt="Please select a room: "
+
+if [ $# == 1 ];then	#checks number of arguments, must be 1
+    filename=$1
+    cat $filename | cut -f6 | sort -u  > temp
+else
+    echo "ERROR: missing file name (number of arguments is not 1)" #missing file name
+    exit
+fi
+
+
+#populate array of room options
+while read line
+do
+    options[$k]="$line"
+    let "k=k+1"
+    #echo $line
+done < temp
+#echo ${options[@]}
+
+PS3="$prompt"
+select opt in "${options[@]}"; do    
+    case "$REPLY" in
+	[0-9]*)
+	    room=${options[$REPLY]}
+	    num_section=$(grep "${options[$REPLY]}" $filename | wc -l)
+	    #grep "${options[$REPLY]}" $filename
+	    echo "Number of course sections : $num_section" 
+	   break;;
+	*)  echo "ERROR: could not understand input, please try again"  # in case user enters non number
+    esac
+done

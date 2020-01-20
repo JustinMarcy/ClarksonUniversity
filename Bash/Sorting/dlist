@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [[ $# = 0 ]];then
+    echo "missing command line argument"
+elif [[ $1 == 'd' ]];then
+    ls -d */   #list ordinary (non-hidden) sub-directories
+elif [[ $1 == 'x' ]];then
+    ls -fl | grep '^\S*x\S*' | grep -v "[.]" | grep -v '^\S*d\S*'
+    #list ordinary (non-hidden) (non-directory) executable files 
+elif [[ $1 == 'nx' ]];then
+    ls -fl | grep -v '^\S*x\S*' | grep -v "[.]"
+    #list ordinary (non-hidden), non-executable files    
+else
+    echo "command line argument not supported"
+fi

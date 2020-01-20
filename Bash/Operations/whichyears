@@ -1,0 +1,25 @@
+#!/bin/bash
+
+c=$(date +%Y)               #current year
+d=$(date -d "$1 $2 $3" +%A) #day of interest
+
+if [[ $# != 3 ]];then
+    echo "Please enter month day year (example: Mar 5 1995)"
+elif [[ $# == 3 ]];then
+    if(($3 <=$c));then
+	for ((i=$3;i<$c;i++));do
+	    select=$(date -d "$1 $2 $i" +%A)
+	    if [[ $select == $d ]];then
+		echo $1 $2 $i is a $d
+	    fi
+	done
+    fi
+    if(($3 > $c));then
+	for ((x=$c;x<$3;x++));do
+	    select=$(date -d "$1 $2 $x" +%A)
+	    if [[ $select == $d ]];then
+		echo $1 $2 $x is a $d
+	    fi
+	done
+	fi
+fi

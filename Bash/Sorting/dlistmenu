@@ -1,0 +1,27 @@
+#!/bin/bash
+while(true);do
+cd ~
+
+echo "Please select an option"
+echo "d)  list all if the directories within the current directory"
+echo "x)  list all of the ordinary, executable files (not directories)"
+echo "nx) list all the ordinary, non-executable files if the directory"
+
+read choice
+case $choice in
+    d) ls -d */ ;;
+    #list ordinary (non-hidden) sub-directories
+    x) ls -fl | grep '^\S*x\S*' | grep -v "[.]" | grep -v '^\S*d\S*' ;;
+    #list ordinary (non-hidden) (non-directory) executable files 
+    nx) ls -fl | grep -v '^\S*x\S*' | grep -v "[.]" ;;
+    #list ordinary (non-hidden), non-executable files    
+    *) echo "ERROR: command line argument not supported"; exit 
+esac
+
+echo "Would you like to continue? (yes or no)"
+read choice2
+if [[ "$choice2" == "no" ]];then
+    break
+fi
+
+done

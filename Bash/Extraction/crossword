@@ -1,0 +1,35 @@
+#!/bin/bash
+
+while(true);do
+echo -n "Please enter known and unknown letters (example: he-lo)"
+read choice
+mod=$choice
+mod=$(sed  's/[-]/[a-z]/g' <<< $mod)
+grep -E "^${mod}$" /usr/share/dict/words
+echo "do you want to continue? (Enter yes or no)"
+read choice2
+if [[ $choice2 == "no" ]];then
+    break
+fi
+done
+
+
+
+#length=${#choice}
+#mod=$(sed  's/\-/[a-z]/g' <<< $mod)
+#for (( i=1; i<${#choice}+2; i++ ));do
+#    #echo ${choice:i:1}
+#    if [[ ${choice:i:1} == "-" ]];then
+#	echo $i
+#	#mod=$(sed -r "s/[-]/[a-z]/$i" <<< $mod)
+#	#mod=$(sed "s/^\(.\{$i\}\)[-]/\[a-z]/" <<< $mod)
+#	#echo "hyphen detected detected at ${i}"
+#   fi
+#    #generate variable for letters
+#    #generate constant variable for unmatched
+        
+#done
+#echo $length
+#echo $mod
+#grep -E "^mod.{length}$" /usr/share/dict/words
+#| grep -e "^${mod}$"

@@ -1,0 +1,150 @@
+1)
+
+	a) alias mkx='chomod' u+x'
+
+	b) This command will be saved in the .bashrc file
+
+	c) The alias must be defined in the .bashrc because this file is read
+	   each time a sub shell is opened. Both .bashrc and .profile are read
+	   by login shells but only .bashrc is read when creating a sub shell.
+
+2)
+
+	a) bash forever 10 10000
+
+	b) It spends most of the time sleeping
+
+	c) No, not while the process is running in the foreground
+
+	d) ctrl + c terminates the process and ctrl + z stops the process.
+
+	e) bg
+
+	f) ps [job number]
+
+	g) It still prints to std out but you can also use the terminal for
+	   commands.
+
+	h) ctrl + c does not terminate the background process. The job status
+	   verifies it is still running. It is also still printing to terminal. 
+
+	i) kill %[job number]
+
+	j) you can just type 'bg' if you just created the prcoess. Otherwise
+	   you type bg %[job number]
+
+3)
+
+	a) od -ta numtext
+
+	b) head -7 numtext | tail -5
+
+	c) head -7 numtext | tail -5 > intermediate && cat intermediate > numtext 
+
+4)
+
+	a) sort -k1,1 sorttest
+	   It sorts the field in alphabetical order with Capitals before lowercase
+
+	b) sort -k2,2 sorttest
+	   The late and new strings are not together because the sort detected a
+	   space infront of the string so it sorted based on the empty character.
+
+	c)
+	  sort -b -k2,2 sorttest	  
+	
+       	 field1 field2 field3 field4
+	 Now     late    done 5
+	 Other   late    done 200
+	 yes     late    done 1
+	 now     new     end  03
+	 other   new     end  20
+
+	 It fixes the problem. 
+
+	d) Just using -b does not fix this for field 4 because of the '03'
+	   To fix this, I used the -g option as follows
+
+	   sort -b -g -k4 sorttest
+	   
+	   field1 field2 field3 field4
+	   yes     late    done 1
+	   now     new     end  03
+	   Now     late    done 5
+	   other   new     end  20
+	   Other   late    done 200
+
+	    
+5)
+
+	a) Inside the usr/include/ directory I typed
+	   wc -l *.h
+
+	   FOR SOME REASON, MY USR/INCLUDE/ DIRECTORY ONLY HAS 7 FILES INSIDE OF IT
+	   AND THERE IS ONLY 1 HEADER FILE (sudo_plugin.h) Not sure why this is the case,
+	   it sounds like this problem requires multiple header files.
+
+	b) Not sure
+
+6)
+
+	a)
+
+	justin@justin-VirtualBox:/usr/bin$ ls *ab*
+	aa-enabled  crontab              iptables-xml      ppmlabel     psfstriptable  tabs
+	alsabat     grub-render-label    lintian-lab-tool  psfaddtable  psfxtable      update-desktop-database
+	baobab      ibus-table-createdb   mlabel           psfgettable  slabtop        update-mime-database
+
+
+	b)
+
+	justin@justin-VirtualBox:/usr/bin$ ls un*
+	unattended-upgrade   unexpand      uniq                unlink  unmkinitramfs  unshare     unwrapdiff  unzip
+	unattended-upgrades  unicode_stop  unity-scope-loader  unlzma  unopkg         unsquashfs  unxz        unzipsfx
+
+
+	c)
+
+	justin@justin-VirtualBox:/usr/bin$ ls -d ?
+ 	X  '['   w
+
+
+	d)
+
+	justin@justin-VirtualBox:~$ ls .bash*
+	.bash_history  .bash_logout  .bashrc
+
+	
+
+7)
+
+	a)
+	   I own the file (justin)
+
+	b)
+	   It belongs to group (justin)
+	   
+	c)
+	   The owner can read/write, group can read, external users can read
+	   
+	d)
+	   justin@justin-VirtualBox:~$ ls -l /bin/bash
+	   -rwxr-xr-x 1 root root 1121696 Sep 12 10:22 /bin/bash
+
+	e)
+	   It belongs to root
+	   
+	f)
+	   It belongs to group (root)
+	   
+	g)
+	   Owner can read/write/execute. group and external user can only
+	   read and execute.
+	   
+	h) read and execute
+
+	ustin@justin-VirtualBox:~$ chmod 444 dog
+	justin@justin-VirtualBox:~$ ls -l dog
+	-r--r--r-- 1 justin justin 0 Feb 20 13:31 dog
+
+

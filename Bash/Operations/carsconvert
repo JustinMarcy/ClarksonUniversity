@@ -1,0 +1,17 @@
+#!/bin/bash
+filename=$1
+IFS=$'\t'                                                                 #change internal field seperator to a TAB 
+for (( i=0, x=4, y=0; i < ($(cat cars | wc -l)/4); i++, x+=4, y+=3 )); do #this loop breaks up the file into groups of 4 lines
+    head -n $x $filename | tail -n 4 | tr -d ',' > temp
+    while read -a line
+    do
+	for ((j=0; j < "${#line[@]}"; j++)); do                           #this loop goes through the 3 strings per line 
+	    array[$j+$y]="${array[$j+$y]} ${line[$j]},"                   #and rearanges to the appropriate array position
+	done
+    done < temp
+done
+for ((k=0; k < ${#array[@]}; k++)); do
+    echo ${array[$k]} >> temp2
+done
+sed 's/.$//g' temp2 | sed 's/ , /, /g' > newcars
+rm temp; rm temp2
