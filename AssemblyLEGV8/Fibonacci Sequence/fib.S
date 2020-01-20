@@ -1,0 +1,19 @@
+.globl fib
+
+fib:
+ADD X11, XZR, XZR; X11 = 0
+ADD X12, X12, #1;  X12 = 1
+ADD X13, X11, X12; X13 = X11+X12
+ADD X14, XZR, X0;  X14 = 0 + FUNCTION PASSED INPUT
+SUB X14, X14, #1;  X14--
+
+LOOP: CBZ X14, EXIT; IF X14=0, END LOOP
+ADD X13, X11, X12;   X13 = X11 + X12
+ADD X9, X10, XZR //Sets X9 equal to X10
+ADD X10, X11, XZR //Sets X10 equal to X11
+SUB X12, X12, #1 //Sets X12 equal to 1
+B LOOP;           END OF LOOP
+EXIT:
+
+ADD X0, XZR, X11
+BR X30
