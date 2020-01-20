@@ -1,0 +1,15 @@
+[marcyjc@polaris1:~/fundamentals/hw2]$ ./a.out hello
+olleh
+
+[marcyjc@polaris1:~/fundamentals/hw2]$ ./a.out racecar
+racecar
+
+[marcyjc@polaris1:~/fundamentals/hw2]$ ./a.out .esnefed fo mrof tseb eht si xat A
+usage: weirdOp a_string
+
+[marcyjc@polaris1:~/fundamentals/hw2]$ ./a.out gnirts a sesrever margorp siht
+usage: weirdOp a_string
+
+[marcyjc@polaris1:~/fundamentals/hw2]$ ./a.out tenet
+tenet
+
