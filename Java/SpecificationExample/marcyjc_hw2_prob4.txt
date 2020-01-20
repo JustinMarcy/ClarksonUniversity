@@ -1,0 +1,14 @@
+---------------------------Procedural Specification-----------------------------
+In this procedure, it would be best to use an exception rather than returning 0
+if an array is empty. Returning 0 is not accurate because an array might sum to
+0 anyways, in which the user could not differentiate between empty and sum = 0.
+
+return_type int
+//REQUIRES: int[] 
+//MODIFIES: N/A
+//EFFECTS:  If the input array is empty, throw ArrayIsEmpty exception. Otherwise
+            return the sum of the array
+
+
+
+--- end ---

@@ -1,0 +1,11 @@
+[921, -100, 11, 0] {size: 4} (rep invariant check: true)
+[IntSet.remove: nothing to remove as 3 is not in the set.]
+[IntSet.remove: nothing to remove as 77 is not in the set.]
+[921, -100, 11, 0, 100] {size: 5} (rep invariant check: true)
+
+
+Testing IntSet's iterator:
+921 -100 11 0 100 
+
+Testing foreach loop with IntSets:
+921 -100 11 0 100 

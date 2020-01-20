@@ -1,0 +1,28 @@
+Student -- a class to manage students registered in a course (see Student.java)
+
+
+List of constructors:
+Student(String)
+constructor -- create Student object with student name
+
+
+Student(String, int[]) 
+constructor -- create Student object with name and list of grades
+
+
+
+List of methods:
+void setName(String)
+method -- update name of the Student
+
+void updateCourseGrades(double[])
+method -- update point grades for the Student (without modifiying or deleting existing grades)
+
+String toString()
+method -- return a summary for this Student that includes only the student ID and whether the course was completed
+
+String listGrades()
+method -- return the student's name and list of grades earned
+
+--- end ---
+
