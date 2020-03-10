@@ -5,7 +5,8 @@
 Practice and understand 'join' between idependent and related tables. Use the 'university' Database.
 
 1) Find name and salary of instructors who earn more than at least one person in Comp. Sci. Department
-'''
+* Code:
+~~~~sql
 USE university;
 SELECT name, salary
 FROM instructor
@@ -14,11 +15,11 @@ SELECT MIN(salary) 'Min Salary'
 FROM instructor 
 WHERE instructor.dept_name='Comp. Sci.'
 )
-'''
+~~~~
 * Result:
-+------------+--------+
+
 | name       | salary |
-+------------+--------+
+|:------------|:--------|
 | Joe        |  58000 |
 | James      |  93000 |
 | Echo       |  70000 |
@@ -60,27 +61,29 @@ WHERE instructor.dept_name='Comp. Sci.'
 | Jeff       |  67000 |
 | Carl       |  70000 |
 | Josh       |  65000 |
-+------------+--------+
+
 41 rows in set (0.00 sec)
 
 2) Find all courses taught in both the Fall 2019 semester and in the Spring 2020 semester.
-'''
+* Code:
+~~~~sql
 USE university;
 SELECT DISTINCT course_id
 FROM teaches
 WHERE (teaches.semester = 1 AND teaches.year = 2019) 
 OR (teaches.semester = 2 AND teaches.year = 2020)
-'''
+~~~~
 * Result:
-+-----------+
+
 | course_id |
-+-----------+
+|:----------|
 | CS141     |
-+-----------+
+
 1 row in set (0.00 sec)
 
 3) Find the names of instructors who teach a course in the Spring 2019 semester
-'''
+* Code:
+~~~~sql
 USE university;
 SELECT name
 FROM instructor
@@ -89,18 +92,19 @@ SELECT instr_id
 FROM teaches
 WHERE teaches.semester = 1 AND teaches.year = 2019
 )
-'''
+~~~~
 * Result:
-+---------+
+
 | name    |
-+---------+
+|:--------|
 | Sam     |
 | Gabriel |
-+---------+
+
 2 rows in set (0.00 sec)
 
 4) Find distinct names of student taught by instructor with id 7101.
-'''
+* Code:
+~~~~sql
 USE university;
 SELECT name
 FROM student 
@@ -113,15 +117,15 @@ FROM teaches
 WHERE instr_id=7101
 )
 )
-'''
-* Result
-+----------+
+~~~~
+* Result:
+
 | name     |
-+----------+
+|:---------|
 | Zhang    |
 | Shankar  |
 | Levy     |
 | Williams |
 | Bourikas |
-+----------+
+
 5 rows in set (0.00 sec)
