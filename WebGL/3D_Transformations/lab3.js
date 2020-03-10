@@ -1,14 +1,15 @@
 var gl;
 var myShaderProgram;
 
-var alpha, beta, gamma;
-var tx, ty, tz;
-var sx, sy, sz;
-var speedX, speedY, speedZ;
-var Mrx, Mry, Mrz;
-var Mt;
-var Ms;
-var Mrxuniform, Mryuniform, Mrzuniform;
+var alpha, beta, gamma;     //angles for X,Y,Z
+var tx, ty, tz;             //translation variables
+var sx, sy, sz;             //scaling variables
+
+var Mrx, Mry, Mrz;          //rotation matrices for X,Y,Z 
+var Mt;                     //translation matrix 
+var Ms;                     //scaling matrix
+
+var Mrxuniform, Mryuniform, Mrzuniform;     
 var Mtuniform;
 var Msuniform;
 
