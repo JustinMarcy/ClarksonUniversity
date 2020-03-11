@@ -104,7 +104,7 @@ WHERE takes.semester=2 AND takes.year=2019
 * Result:
 
 | name     |
-|:----------|
+|:---------|
 | Zhang    |
 | Shankar  |
 | Peltier  |
