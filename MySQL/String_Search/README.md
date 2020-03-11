@@ -46,7 +46,7 @@ SELECT name, dept_name FROM instructor WHERE char_length(name)=3 OR char_length(
 
 
 3) Display the department and name of all instructors first by department, then by name, both in alphabetical order.
-*Solution:
+* Solution:
 ~~~~sql
 SELECT dept_name, name FROM instructor ORDER BY dept_name;
 ~~~~
