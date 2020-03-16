@@ -8,14 +8,15 @@ CREATE USER secretary IDENTIFIED BY 'password';
 #Query OK, 0 rows affected (0.01 sec)
 CREATE USER chair IDENTIFIED BY 'password';
 #Query OK, 0 rows affected (0.01 sec)
+~~~~
 
+* No databases should be visible yet. 
+~~~~sql
 #Verify these two users by login to mysql:
 SYSTEM mysql -u secretary -p
 Enter password: *******
-show databases;
+SHOW databases;
 ~~~~
-
-* No databases should be visible yet.
 
 | Database           |
 |:--------------------|
@@ -55,6 +56,7 @@ CREATE VIEW instructor_name_dept AS SELECT name, dept_name FROM instructor;
 GRANT SELECT on instructor_name_dept to john;
 #Query OK, 0 rows affected (0.01 sec)
 ~~~~
+
 
 4) Grant chair all permissions on all tables in University.
 * Solution:
