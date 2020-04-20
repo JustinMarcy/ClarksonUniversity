@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+
+    precision mediump float;
+    attribute vec4 vertexPosition;
+    attribute vec3 nv;
+
+    // Uniforms for modelview, modelview inverse transpose, and projections
+    uniform mat4 M, M_inversetranspose, P_orth, P_persp;
+
+    // Uniform for projection check
+    uniform float orthIsOn;
+
+    // Uniforms for ambient, diffuse, and Specular
+    uniform vec3 ka, kd, ks;
+
+    // Uniforms for shininess
+    uniform float alpha;
+
+    // Uniform for light position (single light source)
+    uniform vec3 p0;
+
+    // Uniforms for ambient, diffuse, & specular for light components
+    uniform vec3 Ia, Id, Is;
+
+    // Varying vector for the final color
+    varying vec3 R;
+
+    void main() {
+        gl_PointSize = 1.0;
+
+        // Transform vertices by the modelview Matrix
+        vec4 vertexPositionTransformed = M * vertexPosition;
+        vec4 nv4 = vec4(nv.x, nv.y, nv.z, 1.0);
+        vec4 nv4transformed = M_inversetranspose * nv4;
+        vec3 nvtransformed = normalize(nv4transformed.xyz);
+
+        // Get refliction for light source
+        float distance = length(p0 - vertexPositionTransformed.xyz);
+        float a = 0.00005;
+        float b = 0.0;
+        float c = 0.0;
+        float scalefactor = a * distance * distance + b * distance + c;
+        vec3 Ia_pp0 = Ia / scalefactor;
+        vec3 Id_pp0 = Id / scalefactor;
+        vec3 Is_pp0 = Is / scalefactor;
+
+        // Ambient reflection
+        vec3 Ra, Rd, Rs;
+        Ra.r = ka.r * Ia_pp0.r;
+        Ra.g = ka.g * Ia_pp0.g;
+        Ra.b = ka.b * Ia_pp0.b;
+
+        // Diffuse reflection
+        vec3 i = normalize(p0 - vertexPositionTransformed.xyz);
+        float costheta = dot(i, nvtransformed);
+        Rd.r = kd.r * Id_pp0.r * max(costheta, 0.0);
+        Rd.g = kd.r * Id_pp0.g * max(costheta, 0.0);
+        Rd.b = kd.r * Id_pp0.b * max(costheta, 0.0);
+
+        // Specular Reflection
+        vec3 r = 2.0 * costheta * nvtransformed - i;
+        vec3 view = normalize(vec3(0.0, 0.0, 0.0)-vertexPositionTransformed.xyz);
+        float cosphi = dot(r, view);
+        float shine = pow(max(cosphi, 0.0), alpha);
+        float account;
+        if(costheta > 0.0) {
+          account = 1.0;
+        }
+        else {
+          account = 0.0;
+        }
+
+        Rs.r = ks.r * Is_pp0.r * shine * account;
+        Rs.g = ks.g * Is_pp0.g * shine * account;
+        Rs.b = ks.b * Is_pp0.b * shine * account;
+
+        // Summation of ambient, diffuse, and specular reflections
+        R = clamp(Ra + Rd + Rs, 0.0, 1.0);
+
+        // Projection selection
+        if (orthIsOn > 0.5) {
+          gl_Position = P_orth * vertexPositionTransformed;
+          //gl_Position = vec4(P_orth * vertexPositionTransformed);
+        }
+        else {
+          gl_Position = P_persp * vertexPositionTransformed;
+          //gl_Position = vec4(P_persp * vertexPositionTransformed);
+        }
+    }
+
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+    precision mediump float;
+    varying vec3 R;
+    void main() {
+        gl_FragColor = vec4(R.r, R.g, R.b, 1.0);
+    }
+
+</script>
+
+<script type="text/javascript" src="Common/webgl-utils.js"></script>
+<script type="text/javascript" src="Common/initShaders.js"></script>
+<script type="text/javascript" src="Common/MV.js"></script>
+<script type="text/javascript" src="lab4.js"></script>
+<script type="text/javascript" src="object.js"></script>
+</head>
+
+<body onload = "initGL()">
+    <canvas id="gl-canvas" height="512" width="512">
+    </canvas>
+    <div class="btn-group">
+      <button id="orthographic" onclick="orthographic()"/>
+       Orthographic
+      <button id="perspective" onclick="perspective()"/>
+       Perspective
+      <button id="specular" onclick="specular()"/>
+       Specular
+      <button id="LightButton1" onclick="LightButton1()"/>
+       Light Mode 1
+      <button id="LightButton2" onclick="LightButton2()"/>
+       Light Mode 2
+     </div>
+</body>
+</html>
