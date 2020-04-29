@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+            <title>Diamond</title>
+
+            <script id="vertex-shader" type="x-shader/x-vertex">
+                attribute vec4 vertexColor;
+                attribute vec4 vertexPosition;
+                attribute vec2 textureCoordinate;
+                varying vec2 fTextureCoordinate;
+
+                uniform mat4 Mrx, Mry, Mrz; //rotation matrices
+                uniform mat4 Mt;            //translation matrix
+                uniform mat4 Ms;            //scaling matrix
+
+                void main() {
+                    fTextureCoordinate = textureCoordinate;
+                    gl_Position = (Ms * Mt * Mrz * Mry * Mrx) * vertexPosition;
+                }
+
+            </script>
+
+            <script id="fragment-shader" type="x-shader/x-fragment">
+                precision mediump float;
+                varying vec2 fTextureCoordinate;
+                uniform sampler2D textMap;
+                void main() {
+                    vec4 color = texture2D(textMap, fTextureCoordinate);
+                    gl_FragColor.r = color.r;
+                    gl_FragColor.g = color.g;
+                    gl_FragColor.b = color.b;
+                    gl_FragColor.a = 1.0;
+                }
+
+            </script>
+            <script type="text/javascript" src="Common/webgl-utils.js"></script>
+            <script type="text/javascript" src="Common/initShaders.js"></script>
+            <script type="text/javascript" src="Common/MV.js"></script>
+            <script type="text/javascript" src="lab5.js"></script>
+
+    </head>
+
+    <body onload = "init()">
+        <canvas id="gl-canvas" width="512" height="512"></canvas><br/>
+        <img id="brickImage" hidden src="brick.jpg"/>
+    </body>
+
+</html>
