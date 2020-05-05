@@ -1,3 +1,4 @@
+//Justin Marcy
 var gl;
 var myShaderProgram;
 var alpha, beta, gamma;

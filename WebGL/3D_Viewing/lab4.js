@@ -1,10 +1,12 @@
-// Name: Justin Marcy
+specularIsOn// Name: Justin Marcy
 
 var gl;
 var numVertices;
 var numTriangles;
 var orthographicIsOn;
-//var orthographicIsOnLocation;
+var specularIsOn;
+var pointLightIsOn;
+var spotLightIsOn;
 var myShaderProgram;
 
 function initGL(){
@@ -17,7 +19,7 @@ function initGL(){
     gl.viewport( 0, 0, 512, 512 );
     gl.clearColor( 0.0, 0.0, 0.0, 1.0 );
 
-    var myShaderProgram = initShaders( gl, "vertex-shader", "fragment-shader" );
+    myShaderProgram = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( myShaderProgram );
 
 
@@ -57,7 +59,7 @@ function initGL(){
     gl.enableVertexAttribArray(vertexNormalPointer);
 
     // Modelview matrix (look at method)
-    var e = vec3(30.0, 40.0, 60.0);
+    var e = vec3(30.0, 40.0, -65.0);
     var a = vec3(0.0, 0.0, 0.0);
     var vup = vec3(0.0, 1.0, 0.0);
     var n = normalize(vec3(e[0]-a[0], e[1]-a[1], e[2]-a[2]));
@@ -80,12 +82,6 @@ function initGL(){
     gl.uniformMatrix4fv(modelviewMatrixInverseTransposeLocation, false, modelviewMatrixInverseTranspose);
 
     //Projection matrix
-    // var left = -30.0;
-    // var right = 30.0;
-    // var top_ = 30.0;
-    // var bottom = -30.0;
-    // var near = 50.0;
-    // var far = 100.0;
     var left = -5.0;
     var right = 5.0;
     var top_ = 5.0;
@@ -122,7 +118,8 @@ function initGL(){
     orthographicIsOnLocation = gl.getUniformLocation(myShaderProgram, "orthIsOn");
     gl.uniform1f(orthographicIsOnLocation, orthographicIsOn);
 
-    //coefficients for drawObject
+    //coefficients for drawObject & select Specular
+    specularIsOn = 1;
     var kaloc = gl.getUniformLocation(myShaderProgram, "ka");
     var kdloc = gl.getUniformLocation(myShaderProgram, "kd");
     var ksloc = gl.getUniformLocation(myShaderProgram, "ks");
@@ -133,6 +130,7 @@ function initGL(){
     gl.uniform1f(alphaloc, 4.0);
 
     //First point light source location
+    pointLightIsOn = 1;
     var p0loc = gl.getUniformLocation(myShaderProgram, "p0");
     gl.uniform3f(p0loc, 0.0, 0.0, 45.0);
 
@@ -143,6 +141,18 @@ function initGL(){
     gl.uniform3f(Ialoc, 0.1, 0.1, 0.1);
     gl.uniform3f(Idloc, 0.8, 0.8, 0.5);
     gl.uniform3f(Isloc, 0.8, 0.8, 0.8);
+
+    //Spotlight source location
+    spotLightIsOn = 1;
+    var s0loc = gl.getUniformLocation(myShaderProgram, "s0");
+    gl.uniform3f(s0loc, 0.0, 40.0, 80.0);
+    var Saloc = gl.getUniformLocation(myShaderProgram, "Sa");
+    var Sdloc = gl.getUniformLocation(myShaderProgram, "Sd");
+    var Ssloc = gl.getUniformLocation(myShaderProgram, "Ss");
+    gl.uniform3f(Saloc, 0.1, 0.1, 0.1);
+    gl.uniform3f(Sdloc, 0.8, 0.8, 0.5);
+    gl.uniform3f(Ssloc, 0.8, 0.8, 0.8);
+
 
     drawObject();
 
@@ -171,17 +181,66 @@ function perspective() {
 }
 
 function specular() {
-
+if(specularIsOn == 1) {
+  specularIsOn = 0;
+  ksloc = gl.getUniformLocation(myShaderProgram, "ks");
+  gl.uniform3f(ksloc, 0.0, 0.0, 0.0);
+  console.log("Specular OFF");
+}
+else {
+  specularIsOn = 1;
+  ksloc = gl.getUniformLocation(myShaderProgram, "ks");
+  gl.uniform3f(ksloc, 1.0, 1.0, 1.0);
+  console.log("Specular ON");
+}
 
 }
 
 function LightButton1() {
-
-
+  if(pointLightIsOn == 1) {
+     pointLightIsOn = 0;
+     var Ialoc = gl.getUniformLocation(myShaderProgram, "Ia");
+     var Idloc = gl.getUniformLocation(myShaderProgram, "Id");
+     var Isloc = gl.getUniformLocation(myShaderProgram, "Is");
+     gl.uniform3f(Ialoc, 0.0, 0.0, 0.0);
+     gl.uniform3f(Idloc, 0.0, 0.0, 0.0);
+     gl.uniform3f(Isloc, 0.0, 0.0, 0.0);
+     console.log("OFF");
+  }
+  else {
+    pointLightIsOn = 1;
+    var Ialoc = gl.getUniformLocation(myShaderProgram, "Ia");
+    var Idloc = gl.getUniformLocation(myShaderProgram, "Id");
+    var Isloc = gl.getUniformLocation(myShaderProgram, "Is");
+    gl.uniform3f(Ialoc, 0.1, 0.1, 0.1);
+    gl.uniform3f(Idloc, 0.8, 0.8, 0.5);
+    gl.uniform3f(Isloc, 0.8, 0.8, 0.8);
+    console.log("ON");
+  }
 }
 
-function LightButton2() {
 
+function LightButton2() {
+  if(spotLightIsOn == 1) {
+    spotLightIsOn = 0;
+    var Saloc = gl.getUniformLocation(myShaderProgram, "Sa");
+    var Sdloc = gl.getUniformLocation(myShaderProgram, "Sd");
+    var Ssloc = gl.getUniformLocation(myShaderProgram, "Ss");
+    gl.uniform3f(Saloc, 0.0, 0.0, 0.0);
+    gl.uniform3f(Sdloc, 0.0, 0.0, 0.0);
+    gl.uniform3f(Ssloc, 0.0, 0.0, 0.0);
+    console.log("Spot OFF");
+  }
+  else {
+    spotLightIsOn = 1;
+    var Saloc = gl.getUniformLocation(myShaderProgram, "Sa");
+    var Sdloc = gl.getUniformLocation(myShaderProgram, "Sd");
+    var Ssloc = gl.getUniformLocation(myShaderProgram, "Ss");
+    gl.uniform3f(Saloc, 0.1, 0.1, 0.1);
+    gl.uniform3f(Sdloc, 0.8, 0.8, 0.5);
+    gl.uniform3f(Ssloc, 0.8, 0.8, 0.8);
+    console.log("Spot ON");
+  }
 }
 
 function getFaceNormals(vertices, indexList, numTriangles) {

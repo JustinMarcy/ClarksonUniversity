@@ -23,11 +23,22 @@
     // Uniform for light position (single light source)
     uniform vec3 p0;
 
+    // Uniform for spotlight position;
+    uniform vec3 s0;
+
     // Uniforms for ambient, diffuse, & specular for light components
     uniform vec3 Ia, Id, Is;
 
+    // Uniform for ambient, diffuse, & specular for spotLight
+    uniform vec3 Sa, Sd, Ss;
+
     // Varying vector for the final color
     varying vec3 R;
+    varying vec3 R2;
+
+    const float spotRadius = 0.5;
+
+
 
     void main() {
         gl_PointSize = 1.0;
@@ -38,7 +49,7 @@
         vec4 nv4transformed = M_inversetranspose * nv4;
         vec3 nvtransformed = normalize(nv4transformed.xyz);
 
-        // Get refliction for light source
+        // Get reflection for light source
         float distance = length(p0 - vertexPositionTransformed.xyz);
         float a = 0.00005;
         float b = 0.0;
@@ -48,11 +59,23 @@
         vec3 Id_pp0 = Id / scalefactor;
         vec3 Is_pp0 = Is / scalefactor;
 
+        //Reflection for Spotlight
+        float distance_s0 = length(s0 - vertexPositionTransformed.xyz);
+        float scalefactor_s0 = a * distance_s0 * distance_s0 + b * distance_s0 + c; //Math.pow(Math.cos(theta), Math.E)
+        vec3 Sa_s0 = Sa / scalefactor_s0;
+        vec3 Sd_s0 = Sd / scalefactor_s0;
+        vec3 Ss_s0 = Ss / scalefactor_s0;
+
         // Ambient reflection
         vec3 Ra, Rd, Rs;
         Ra.r = ka.r * Ia_pp0.r;
         Ra.g = ka.g * Ia_pp0.g;
         Ra.b = ka.b * Ia_pp0.b;
+
+        vec3 R2a, R2d, R2s;
+        R2a.r = ka.r * Sa_s0.r;
+        R2a.g = ka.g * Sa_s0.g;
+        R2a.b = ka.b * Sa_s0.b;
 
         // Diffuse reflection
         vec3 i = normalize(p0 - vertexPositionTransformed.xyz);
@@ -60,6 +83,12 @@
         Rd.r = kd.r * Id_pp0.r * max(costheta, 0.0);
         Rd.g = kd.r * Id_pp0.g * max(costheta, 0.0);
         Rd.b = kd.r * Id_pp0.b * max(costheta, 0.0);
+
+        vec3 j = normalize(s0 - vertexPositionTransformed.xyz);
+        float Rcostheta = dot(j, nvtransformed);
+        R2d.r = kd.r * Sd_s0.r * max(Rcostheta, 0.0);
+        R2d.g = kd.r * Sd_s0.g * max(Rcostheta, 0.0);
+        R2d.b = kd.r * Sd_s0.b * max(Rcostheta, 0.0);
 
         // Specular Reflection
         vec3 r = 2.0 * costheta * nvtransformed - i;
@@ -74,12 +103,35 @@
           account = 0.0;
         }
 
+        vec3 t = 2.0 * Rcostheta * nvtransformed - j;
+        vec3 Rview = normalize(vec3(0.0, 0.0, 0.0)-vertexPositionTransformed.xyz);
+        float Rcosphi = dot(t, Rview);
+        float Rshine = pow(max(Rcosphi, 0.0), alpha);
+        float Raccount;
+        if(Rcostheta > 0.0) {
+          Raccount = 1.0;
+        }
+        else {
+          Raccount = 0.0;
+        }
+
         Rs.r = ks.r * Is_pp0.r * shine * account;
         Rs.g = ks.g * Is_pp0.g * shine * account;
         Rs.b = ks.b * Is_pp0.b * shine * account;
 
+        R2s.r = ks.r * Ss_s0.r * Rshine * Raccount;
+        R2s.g = ks.g * Ss_s0.g * Rshine * Raccount;
+        R2s.b = ks.b * Ss_s0.b * Rshine * Raccount;
+
+        //spotlight
+        if (distance_s0 >= 8.0){
+        R2.r *= 2.0;
+        R2.g *= 2.0;
+        R2.b *= 2.0;
+        }
         // Summation of ambient, diffuse, and specular reflections
-        R = clamp(Ra + Rd + Rs, 0.0, 1.0);
+        R = clamp(Ra + R2a + Rd + R2d + Rs + R2s, 0.0, 1.0);
+        //R2 = clamp(R2a + R2d + R2s, 0.0, 1.0);
 
         // Projection selection
         if (orthIsOn > 0.5) {
@@ -90,6 +142,8 @@
           gl_Position = P_persp * vertexPositionTransformed;
           //gl_Position = vec4(P_persp * vertexPositionTransformed);
         }
+
+
     }
 
 </script>
@@ -97,9 +151,9 @@
 <script id="fragment-shader" type="x-shader/x-fragment">
 
     precision mediump float;
-    varying vec3 R;
+    varying vec3 R, R2;
     void main() {
-        gl_FragColor = vec4(R.r, R.g, R.b, 1.0);
+        gl_FragColor = vec4(R.r, R.g, R.b, 1.0); // + vec4(R2.r, R2.g, R2.b, 1.0);
     }
 
 </script>

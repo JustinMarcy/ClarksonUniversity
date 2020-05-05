@@ -1,4 +1,4 @@
-Justin Mrcy
+Justin Marcy
 4/27
 
 Shape used from lab3: Diamond (8 faces, 6 vertices)
@@ -19,6 +19,20 @@ New number of vertices = 24
 
 I kept the controls and transformations the same as in lab 3,
 but I implemented the necessary texture components from the class example.
+Control (from lab3)
+-diamond shape (8 faces, 6 vertices)
+-each vertex has a different color and each face has interpolated colors 
+-keys Q, W, E control rotation for x-axis, y-axis, z-axis respectively
+-keys A, S control scaling in x, A for decrease, S for increase
+-keys Z, X control scaling in y, Z for decrease, X for increase
+-left & right arrow keys control translations in x
+-up & down arrow keys control translations in y
+
+Transformation Composition (from lab3):
+-Order of composition is Rotate X, Rotate Y, Rotate Z, Translation, Scaling
+-Roation increment = 0.1
+-Translation increment = 0.05
+-Scaling increment = 0.05
 
 Conclusion:
 When I initially tried the texture mapping described in the lecture, my shape
