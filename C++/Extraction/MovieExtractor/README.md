@@ -1,0 +1,4 @@
+### Date April 26, 2020
+* Objective:
+The  file lab10movies.cppcontains  a  program  that  allows  the  user  to  read  movie  names  and movie release dates from a file called movies.txt. The data is read into a single ended linked list. Once all the data has been read in, the user is given a menu option with 3 choices. Choice1 will  list  all  movies  released  before  a  specified  year,  Choice  2  will  list  all  movies  stored  in  the linked list, and Choice 3 will exit the program.The file lab10movies.cppis incomplete, the sections you mustcomplete have the tag TODO on  them.  The  main  task  is  to  create  the  function showBeforeYearand  have  it  list  all  movies before a specified year, if there are no movies before the specified year then let the user know that there are no movies.
+
