@@ -42,13 +42,13 @@ In this mode, everything is the same as standard mode except for the following. 
 * Can have more than one master
 * Each slave has a unique address
 * Two Signals (recommend pull up resistors to vdd+ per wire)
-** SCL (serial clock)
-** SDA (serial data)
+<li>SCL (serial clock)</li> 
+<li>SDA (serial data)</li> 
 * Bus width is 8-bit
-** each slave has 7-bit unique address
-** (7 downto 1) is used for slave address
-** 0 bit is used for read / write command
-** If bit 0 (in the address byte) is set to 1 then the master device will read from the slave I2C device
+<li>each slave has 7-bit unique address</li>
+<li>(7 downto 1) is used for slave address</li>
+<li>0 bit is used for read / write command</li>
+<li>If bit 0 (in the address byte) is set to 1 then the master device will read from the slave I2C device</li>
 
 ### I2C State Machine
 The primary communication protocol of this project is serial I2C. The ADC uses this interface to communicate with the Zybo FPGA board. To accomplish this, we designed a controller to dictate the state of the I2C. The state machine has four states. In the start state, the master is initialized and sends a slave address to the ADC. Next, The write state sends the control byte which is responsible for configuring the ADC inputs and outputs. The read state allows the system to read the sampled inputs until the control byte is changed. The stop state simply goes back to the start.
