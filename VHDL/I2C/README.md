@@ -36,7 +36,9 @@ In this mode, everything is the same as standard mode except for the following. 
 
 ### I2C State Machine
 The primary communication protocol of this project is serial I2C. The ADC uses this interface to communicate with the Zybo FPGA board. To accomplish this, we designed a controller to dictate the state of the I2C. The state machine has four states. In the start state, the master is initialized and sends a slave address to the ADC. Next, The write state sends the control byte which is responsible for configuring the ADC inputs and outputs. The read state allows the system to read the sampled inputs until the control byte is changed. The stop state simply goes back to the start.
+
 ![stateMachine](stateMachine.png)
 
 ### Utilization 
+
 ![Utilization](util.png)
