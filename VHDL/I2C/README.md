@@ -34,6 +34,22 @@ The default mode of the system allows any 1 out of the 4 analog inputs to be sam
 * Clock Generation Mode:
 In this mode, everything is the same as standard mode except for the following. The FPGA board must generate a clock with a frequency range from 500 Hz to 1500 Hz. The range is controlled by the digitally converted sensor inputs received though the I2C interface. The system takes this 8-bit number and uses a ROM file to then output a 16-bit number. This 16-bit number is then used to create a count value that divides the system clock of 150 Mhz. The 8-bit value is upscaled to a 16-bit width to achieve a large enough count for the desired frequencies. The count range is from 0x0000 to 0xFFFF. If the third button is pressed, clock generation enable is toggled and the LCD displays this mode on the second line. 
 
+### General I2C Description
+![I2C](I2C.PNG)
+* Maximum 100 kHz (fast mode 400kHz)
+* Master device needs no address since it generates the clock (via SCL) and addresses individual I2C slave devices
+* Communication is initiated by the master device.
+* Can have more than one master
+* Each slave has a unique address
+* Two Signals (recommend pull up resistors to vdd+ per wire)
+- SCL (serial clock)
+- SDA (serial data)
+* Bus width is 8-bit
+- each slave has 7-bit unique address
+- (7 downto 1) is used for slave address
+- 0 bit is used for read / write command
+- If bit 0 (in the address byte) is set to 1 then the master device will read from the slave I2C device
+
 ### I2C State Machine
 The primary communication protocol of this project is serial I2C. The ADC uses this interface to communicate with the Zybo FPGA board. To accomplish this, we designed a controller to dictate the state of the I2C. The state machine has four states. In the start state, the master is initialized and sends a slave address to the ADC. Next, The write state sends the control byte which is responsible for configuring the ADC inputs and outputs. The read state allows the system to read the sampled inputs until the control byte is changed. The stop state simply goes back to the start.
 
