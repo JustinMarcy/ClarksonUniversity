@@ -36,19 +36,24 @@ In this mode, everything is the same as standard mode except for the following. 
 
 ### General I2C Description
 ![I2C](I2C.PNG)
-* Maximum 100 kHz (fast mode 400kHz)
-* Master device needs no address since it generates the clock (via SCL) and addresses individual I2C slave devices
-* Communication is initiated by the master device.
-* Can have more than one master
-* Each slave has a unique address
-* Two Signals (recommend pull up resistors to vdd+ per wire)
+<ul>
+<li>Maximum 100 kHz (fast mode 400kHz)</li>
+<li>Master device needs no address since it generates the clock (via SCL) and addresses individual I2C slave devices</li>
+<li>Communication is initiated by the master device</li>
+<li>Can have more than one master</li>
+<li>Each slave has a unique address</li>
+<li>Two Signals (recommend pull up resistors to vdd+ per wire)
+<ul>
 <li>SCL (serial clock)</li> 
-<li>SDA (serial data)</li> 
-* Bus width is 8-bit
+<li>SDA (serial data)</li>
+</ul>
+<li>Bus width is 8-bit
+<ul>
 <li>each slave has 7-bit unique address</li>
 <li>(7 downto 1) is used for slave address</li>
 <li>0 bit is used for read / write command</li>
 <li>If bit 0 (in the address byte) is set to 1 then the master device will read from the slave I2C device</li>
+</ul>
 
 ### I2C State Machine
 The primary communication protocol of this project is serial I2C. The ADC uses this interface to communicate with the Zybo FPGA board. To accomplish this, we designed a controller to dictate the state of the I2C. The state machine has four states. In the start state, the master is initialized and sends a slave address to the ADC. Next, The write state sends the control byte which is responsible for configuring the ADC inputs and outputs. The read state allows the system to read the sampled inputs until the control byte is changed. The stop state simply goes back to the start.
