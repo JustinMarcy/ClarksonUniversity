@@ -3,10 +3,10 @@
 
 # Pointers, Movie Example
 
-* Task:
-The file lab10movies.cppcontains  a  program  that  allows  the  user  to  read  movie  names  and movie release dates from a file called movies.txt. The data is read into a single ended linked list. Once all the data has been read in, the user is given a menu option with 3 choices. Choice1 will  list  all  movies  released  before  a  specified  year,  Choice  2  will  list  all  movies  stored  in  the linked list, and Choice 3 will exit the program.The file lab10movies.cppis incomplete, the sections you mustcomplete have the tag TODO on  them.  The  main  task  is  to  create  the  function showBeforeYearand  have  it  list  all  movies before a specified year, if there are no movies before the specified year then let the user know that there are no movies.
+## Task:
+The file lab10movies.cpp contains  a  program  that  allows  the  user  to  read  movie  names  and movie release dates from a file called movies.txt. The data is read into a single ended linked list. Once all the data has been read in, the user is given a menu option with 3 choices. Choice1 will  list  all  movies  released  before  a  specified  year,  Choice  2  will  list  all  movies  stored  in  the linked list, and Choice 3 will exit the program.The file lab10movies.cppis incomplete, the sections you mustcomplete have the tag TODO on  them.  The  main  task  is  to  create  the  function showBeforeYearand  have  it  list  all  movies before a specified year, if there are no movies before the specified year then let the user know that there are no movies.
 
-* Solution:
+## Solution:
 
 ~~~c++
 
@@ -165,4 +165,59 @@ void listMovies(node* currentPtr)
 	}
 }
 
+~~~
+
+## Results:
+
+~~~
+Press 1 to list movies released before a specific year.
+Press 2 to list all movies.
+Press 3 to quit.
+Enter your choice:
+~~~
+
+* Option 1:
+~~~
+Enter your choice: 1
+Please enter a year
+1999
+Titanic released in 1997
+The_Lion_King released in 1994
+Jurassic_Park released in 1993
+~~~
+
+* Option 2:
+~~~
+Enter your choice: 2
+Zootopia_film released in 2016
+Toy_Story_3 released in 2010
+Titanic released in 1997
+The_Secret_Life_of_Pets released in 2016
+The_Lion_King released in 1994
+The_Jungle_Book released in 2016
+The_Dark_Knight_Rises released in 2012
+The_Dark_Knight released in 2008
+The_Avengers released in 2012
+Spider-Man_3 released in 2007
+Spectre released in 2015
+Skyfall released in 2012
+Shrek_2 released in 2004
+Minions released in 2015
+Jurassic_World released in 2015
+Jurassic_Park released in 1993
+Iron_Man_3 released in 2013
+Furious_7 released in 2015
+Frozen released in 2013
+Finding_Nemo released in 2003
+Finding_Dory released in 2016
+Despicable_Me_2 released in 2013
+Avengers:_Age_of_Ultron released in 2015
+Avatar released in 2009
+Alice_in_Wonderland released in 2010
+~~~
+
+* Option 3:
+~~~
+Enter your choice: 3
+Exiting program.
 ~~~
