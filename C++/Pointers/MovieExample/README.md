@@ -8,7 +8,8 @@ The file lab10movies.cppcontains  a  program  that  allows  the  user  to  read 
 
 * Solution:
 
-'''c++
+~~~c++
+
 #include<iostream>
 #include<string>
 #include<fstream>
@@ -163,4 +164,5 @@ void listMovies(node* currentPtr)
 		currentPtr = currentPtr->prevPtr;
 	}
 }
-'''
+
+~~~
